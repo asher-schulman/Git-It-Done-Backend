@@ -20,7 +20,12 @@ const userSchema = new Schema({
         default: Date.now
     },
     // array of all the workspaces user is a part of
-    workspaces: [Workspace]
+    // workspaces: [Workspace]
+    // workspaces: []
+    workspaces: [{
+        type: Schema.ObjectId,
+        ref: 'Workspace'
+    }]
 })
 
 module.exports = mongoose.model('User', userSchema)

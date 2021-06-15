@@ -4,17 +4,20 @@
 require('dotenv').config()
 const express = require('express')
 const cors = require ('cors')
+const mongoose = require('mongoose')
+const Task = require('./models/Task.model')
+
 /////////////////////////
 // The Application Object
 /////////////////////////
 const app = express()
+const port = process.env.PORT || 8000;
+
 /////////////////////////
-// MIDDLEWARE
+// Database
 /////////////////////////
-app.use(cors())
-app.use(express.json())
 // import mongoose
-const mongoose = require('mongoose')
+// const mongoose = require('mongoose')
 //tells mongoose what databse to try and connect to. establishes how our backend server communicates with the back end database
 mongoose.connect(process.env.DATABASE_URL, {
     useNewUrlParser: true,
@@ -30,29 +33,56 @@ mongoose.connection.once('open', () => {
 })
 
 /////////////////////////
-// The Data
+// MIDDLEWARE
 /////////////////////////
-
-// maybe something with databse info or connecting here?
+app.use(cors())
+app.use(express.json())
 
 /////////////////////////
-// Routes
+// API Endpoints
 /////////////////////////
 
 // database like .findById() CRUD operations
 
 // test route that sends some json data to make sure server is working
-app.get("/test", (req, res) => {
+app.get("/", (req, res) => {
+    // set OK status in response
+    res.status(200);
     //res.json let's us send a response as JSON data
     res.json({
         response: "Hello World",
         key: 'value pair!'
     })
 })
+
+// route to create a test mongoose schema
+app.post('/uploadTask', (req, res) => {
+    // want to save whatever comes in as req.body as a variable
+    const body = req.body
+
+    Task.create(body, (err, data) => {
+        if (err) {
+            res.status(500).send(err)
+        } else {
+            res.status(201).send(data)
+        }
+    })
+})
+
+// used to sync database info with frontend
+app.get('/sync', (req, res) => {
+    Task.find((err, data) => {
+        if (err) {
+            res.status(500).send(err)
+        } else {
+            res.status(200).send(data)
+        } 
+    })
+})
+
 /////////////////////////
 // Listener
 /////////////////////////
-const port = process.env.PORT || 8000;
 app.listen(port, () => {
   console.log(`the backend server is running on port ${port}`);
 });

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const User = require('./User.model')
 const Task = require('./Task.model')
+const User = require('./User.model')
 
 const Schema = mongoose.Schema
 
@@ -9,8 +9,18 @@ const workspaceSchema = new Schema({
         type: String, 
         required: true
     },
-    workspaceUsers: [User],
-    tasks: [Task],
+    // array of users who are in this workspace
+    // workspaceUsers: [User]
+    workspaceUsers: [{
+        type: Schema.ObjectId,
+        ref: 'User'
+    }],
+    // arr of tasks inside this workspace
+    // tasks: [Task]
+    tasks: [{
+        type: Schema.ObjectId,
+        ref: 'Task'
+    }],
     sessionData: {type: Array}
 })
 
