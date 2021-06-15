@@ -17,6 +17,7 @@ const taskSchema = new Schema({
         type: String,
         required: true
     },
+    categories: [String],
     // id of the workspace this task belongs to
     parentWorkspaceID: {
         type: String,

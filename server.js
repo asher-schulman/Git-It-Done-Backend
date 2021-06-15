@@ -5,7 +5,9 @@ require('dotenv').config()
 const express = require('express')
 const cors = require ('cors')
 const mongoose = require('mongoose')
+
 const Task = require('./models/Task.model')
+const tasks = require('./routes/api/tasks')
 
 /////////////////////////
 // The Application Object
@@ -41,6 +43,8 @@ app.use(express.json())
 /////////////////////////
 // API Endpoints
 /////////////////////////
+// router to clean up urls
+app.use('/api/tasks', tasks)
 
 // database like .findById() CRUD operations
 
@@ -52,20 +56,6 @@ app.get("/", (req, res) => {
     res.json({
         response: "Hello World",
         key: 'value pair!'
-    })
-})
-
-// route to create a test mongoose schema
-app.post('/uploadTask', (req, res) => {
-    // want to save whatever comes in as req.body as a variable
-    const body = req.body
-
-    Task.create(body, (err, data) => {
-        if (err) {
-            res.status(500).send(err)
-        } else {
-            res.status(201).send(data)
-        }
     })
 })
 
