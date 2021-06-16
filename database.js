@@ -25,6 +25,6 @@ const testConstant = {69: 'nice'}
 
 module.exports = {
     connectDB: connectDB,
-    function: testFunction,
-    constant: testConstant
+    testFunction: testFunction,
+    testConstant: testConstant
 }
