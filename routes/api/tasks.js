@@ -13,15 +13,11 @@ router.get('/', (req, res) => {
 // POST /api/tasks/
 router.post('/', (req, res) => {
     const newTask = new Task({
-        taskID: req.body.taskID,
+        taskId: req.body.taskId,
         title: req.body.title,
         description: req.body.description,
         categories: req.body.categories,
         parentWorkspaceID: req.body.parentWorkspaceID,
-        taskID: req.body.taskID,
-        title: req.body.title,
-        description: req.body.description,
-        parentWorkspaceID: req.body.parentWorkspaceID, 
     });
     newTask.save().then(task => res.json(task))
 })

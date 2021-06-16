@@ -4,47 +4,53 @@
 require('dotenv').config()
 const express = require('express')
 const cors = require ('cors')
-const mongoose = require('mongoose')
+// const mongoose = require('mongoose')
+const port = process.env.PORT || 8000;
+const connectDB = require('./database')
 
 const Task = require('./models/Task.model')
-const tasks = require('./routes/api/tasks')
+const taskRouter = require('./routes/api/tasks')
+const userRouter = require('./routes/api/users')
+const workspaceRouter = require('./routes/api/workspaces.js')
 
 /////////////////////////
 // The Application Object
 /////////////////////////
 const app = express()
-const port = process.env.PORT || 8000;
 
 /////////////////////////
 // Database
 /////////////////////////
+connectDB()
 // import mongoose
 // const mongoose = require('mongoose')
 //tells mongoose what databse to try and connect to. establishes how our backend server communicates with the back end database
-mongoose.connect(process.env.DATABASE_URL, {
-    useNewUrlParser: true,
-    useFindAndModify: false,
-    useUnifiedTopology: true
-})
-//double-check that we connected to mongoose
-mongoose.connection.on('error', () => {
-    console.log('Error connecting to mongoose database...')
-})
-mongoose.connection.once('open', () => {
-    console.log('Connected to mongoose database')
-})
+// mongoose.connect(process.env.DATABASE_URL, {
+//     useNewUrlParser: true,
+//     useFindAndModify: false,
+//     useUnifiedTopology: true
+// })
+// //double-check that we connected to mongoose
+// mongoose.connection.on('error', () => {
+//     console.log('Error connecting to mongoose database...')
+// })
+// mongoose.connection.once('open', () => {
+//     console.log('Connected to mongoose database')
+// })
 
 /////////////////////////
 // MIDDLEWARE
 /////////////////////////
-app.use(cors())
+app.use(cors({ origin: true, credentials: true }))
 app.use(express.json())
 
 /////////////////////////
-// API Endpoints
+// API Endpoints/Routers
 /////////////////////////
-// router to clean up urls
-app.use('/api/tasks', tasks)
+// url endpoints for us to communicate with our API
+app.use('/api/tasks', taskRouter)
+// app.use('/api/users', userRouter)
+// app.use('/api/workspaces', workspaceRouter)
 
 // database like .findById() CRUD operations
 

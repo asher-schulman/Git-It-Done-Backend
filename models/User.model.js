@@ -4,16 +4,17 @@ const Schema = mongoose.Schema
 
 const userSchema = new Schema({
     // google id is used like username
-    googleID : {
+    googleId : {
+        type : String,
+        required: true 
+    },
+    tokenId : {
         type : String,
         required: true 
     },
     // this is their display name or alias?
-    displayName : {
-        type : String,
-        required: true
-    },
-    image: {type: String},
+    displayName : String,
+    image: String,
     createdAt: {
         type: Date,
         default: Date.now
