@@ -22,6 +22,13 @@ router.post('/', (req, res) => {
     newTask.save().then(task => res.json(task))
 })
 
+// GET /api/tasks/:id
+router.get('/:id', (req, res) => {
+    Task.findById(req.params.id)
+    .then( task => res.json(task))
+    .catch( err => res.status(404).json({success: false}))
+})
+
 // DELETE /api/tasks/:id
 router.delete('/:id', (req, res) => {
     Task.findById(req.params.id)

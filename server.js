@@ -30,15 +30,17 @@ app.use(cors({ origin: true, credentials: true }))
 app.use(express.json())
 
 /////////////////////////
-// API Endpoints/Routers
+// Routers
 /////////////////////////
 // url endpoints for us to communicate with our API
 app.use('/api/tasks', taskRouter)
 // app.use('/api/users', userRouter)
 // app.use('/api/workspaces', workspaceRouter)
 
+/////////////////////////
+// API Endpoints
+/////////////////////////
 // database like .findById() CRUD operations
-
 // test route that sends some json data to make sure server is working
 app.get("/", (req, res) => {
     // set OK status in response
