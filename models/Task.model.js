@@ -11,7 +11,12 @@ const taskSchema = new Schema({
     description: {
         type: String,
     },
-    categories: [String],
+    status: {
+        type: String,
+        required: true,
+        default: 'open'
+    },
+    flags: [String],
     createdBy: {
         type: Schema.ObjectId,
         ref: User
