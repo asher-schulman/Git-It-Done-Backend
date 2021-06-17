@@ -3,54 +3,70 @@
 /////////////////////////
 require('dotenv').config()
 const express = require('express')
+const cors = require ('cors')
+// const mongoose = require('mongoose')
+const port = process.env.PORT || 8000;
+const database = require('./database')
+
+const Task = require('./models/Task.model')
+const taskRouter = require('./routes/api/tasks')
+const userRouter = require('./routes/api/users')
+const workspaceRouter = require('./routes/api/workspaces.js')
+
 /////////////////////////
 // The Application Object
 /////////////////////////
 const app = express()
+
+/////////////////////////
+// Database
+/////////////////////////
+database.connectDB()
+
 /////////////////////////
 // MIDDLEWARE
 /////////////////////////
+app.use(cors({ origin: true, credentials: true }))
 app.use(express.json())
-// import mongoose
-const mongoose = require('mongoose')
-//tells mongoose what databse to try and connect to. establishes how our backend server communicates with the back end database
-mongoose.connect(process.env.DATABASE_URL, {
-    useNewUrlParser: true,
-    useFindAndModify: false,
-    useUnifiedTopology: true
-})
-//double-check that we connected to mongoose
-mongoose.connection.on('error', () => {
-    console.log('Error connecting to mongoose database...')
-})
-mongoose.connection.once('open', () => {
-    console.log('Connected to mongoose database')
-})
 
 /////////////////////////
-// The Data
+// Routers
 /////////////////////////
-
-// maybe something with databse info or connecting here?
+// url endpoints for us to communicate with our API
+app.use('/api/tasks', taskRouter)
+// app.use('/api/users', userRouter)
+// app.use('/api/workspaces', workspaceRouter)
 
 /////////////////////////
-// Routes
+// API Endpoints
 /////////////////////////
-
 // database like .findById() CRUD operations
-
 // test route that sends some json data to make sure server is working
-app.get("/test", (req, res) => {
-    //res.json let's us send a response as JSON data
-    res.json({
-        response: "Hello World",
-        key: 'value pair!'
-    })
+app.get("/", async (req, res) => {
+    try {
+        res.status(200).json( await {
+            response: "Hello World",
+            key: 'value pair!'
+        })
+    } catch (err) {
+        res.status(400).json(err)
+    }
 })
+
+// used to sync database info with frontend
+// app.get('/sync', (req, res) => {
+//     Task.find((err, data) => {
+//         if (err) {
+//             res.status(500).send(err)
+//         } else {
+//             res.status(200).send(data)
+//         } 
+//     })
+// })
+
 /////////////////////////
 // Listener
 /////////////////////////
-const port = process.env.PORT || 8000;
 app.listen(port, () => {
-  console.log(`Your server is running on port ${port}`);
+  console.log(`the backend server is running on port ${port}`);
 });
