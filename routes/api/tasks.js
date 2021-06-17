@@ -18,11 +18,11 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         const newTask = new Task({
-            taskId: req.body.taskId,
             title: req.body.title,
             description: req.body.description,
             categories: req.body.categories,
-            createdBy: req.body.parentWorkspaceID,
+            // add createdby User object on creation of new task
+            // createdBy: CURRENT_USER_HERE,
         })
         newTask.save()
             .then(task => res.status(200).json(task))
