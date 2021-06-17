@@ -18,11 +18,12 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         const newUser = new User({
-            taskId: req.body.taskId,
-            googleId: req.body.googleObj.googleId,
+            googleId: req.body.profileObj.googleId,
+            // maybe set mongoDB _id to the googleId?
+            // _id: req.body.progileObj.googleId,
             tokenId: req.body.tokenObj.id_token,
-            displayName: req.body.googleObj.name,
-            image: req.body.googleObj.imageUrl,
+            displayName: req.body.profileObj.name,
+            image: req.body.profileObj.imageUrl,
         })
         newUser.save()
             .then(task => res.status(200).json(task))
