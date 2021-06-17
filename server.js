@@ -42,26 +42,27 @@ app.use('/api/tasks', taskRouter)
 /////////////////////////
 // database like .findById() CRUD operations
 // test route that sends some json data to make sure server is working
-app.get("/", (req, res) => {
-    // set OK status in response
-    res.status(200);
-    //res.json let's us send a response as JSON data
-    res.json({
-        response: "Hello World",
-        key: 'value pair!'
-    })
+app.get("/", async (req, res) => {
+    try {
+        res.status(200).json( await {
+            response: "Hello World",
+            key: 'value pair!'
+        })
+    } catch (err) {
+        res.status(400).json(err)
+    }
 })
 
 // used to sync database info with frontend
-app.get('/sync', (req, res) => {
-    Task.find((err, data) => {
-        if (err) {
-            res.status(500).send(err)
-        } else {
-            res.status(200).send(data)
-        } 
-    })
-})
+// app.get('/sync', (req, res) => {
+//     Task.find((err, data) => {
+//         if (err) {
+//             res.status(500).send(err)
+//         } else {
+//             res.status(200).send(data)
+//         } 
+//     })
+// })
 
 /////////////////////////
 // Listener

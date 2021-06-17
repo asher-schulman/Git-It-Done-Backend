@@ -9,12 +9,10 @@ const connectDB = () => {
         useUnifiedTopology: true
     })
     //double-check that we connected to mongoose
-    mongoose.connection.once('open', () => {
-        console.log('Connected to mongoose database')
-    })
-    mongoose.connection.on('error', () => {
-        console.log('Error connecting to mongoose database...')
-    })  
+    mongoose.connection
+        .on('open', () => console.log('Connected to mongoose database'))
+        .on('close', () => console.log('Disconnected to mongoose database'))
+        .on('error', () => console.log('Error connecting to mongoose database...'))
 }
 
 const testFunction = () => {

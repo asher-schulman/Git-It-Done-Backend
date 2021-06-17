@@ -17,9 +17,15 @@ router.post('/', (req, res) => {
         title: req.body.title,
         description: req.body.description,
         categories: req.body.categories,
-        parentWorkspaceID: req.body.parentWorkspaceID,
+        createdBy: req.body.parentWorkspaceID,
     });
     newTask.save().then(task => res.json(task))
+})
+
+// PUT /api/tasks/:id
+router.put('/:id', (req, res) => {
+    Task.findByIdAndUpdate(req.params.id)
+    .then()
 })
 
 // GET /api/tasks/:id
