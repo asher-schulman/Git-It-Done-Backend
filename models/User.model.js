@@ -6,11 +6,11 @@ const userSchema = new Schema({
     // google id is used like username
     googleId : {
         type : String,
-        required: true 
+        // required: true 
     },
     tokenId : {
         type : String,
-        required: true 
+        // required: true 
     },
     // this is their display name or alias?
     displayName : String,

@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 // Workspace model
-const Workspace = require('../../models/User.model')
+const Workspace = require('../../models/Workspace.model')
 
 // GET /api/workspaces/
 router.get('/', async (req, res) => {
@@ -15,13 +15,23 @@ router.get('/', async (req, res) => {
     }
 })
 // POST /api/workspaces/
+
+const statusCheck = () => {
+    if (req.body.statuses !== '') {
+        return (req.body.statuses)
+    } else {
+        return(['open', 'closed'])
+    }
+}
+
 router.post('/', async (req, res) => {
     try {
         const newWorkspace = new Workspace({
             title: req.body.title,
-            statuses: ([req.body.statuses] || ['open']),
-            users: [req.params.users],
-            tasks: [req.params.tasks]
+            // statuses: statusCheck,
+            statuses: req.body.statuses,
+            users: [req.body.users],
+            tasks: [req.body.tasks]
         })
         newWorkspace.save()
             .then(task => res.status(200).json(task))
