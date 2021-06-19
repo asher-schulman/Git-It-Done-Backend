@@ -17,9 +17,8 @@ const taskSchema = new Schema({
         default: 'open'
     },
     flags: [String],
-    createdBy: {
-        type: Schema.ObjectId,
-        ref: User
+    userId: {
+        type: String
     },
     createdAt: {
         type: Date,

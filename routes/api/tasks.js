@@ -21,8 +21,8 @@ router.post('/', async (req, res) => {
             title: req.body.title,
             description: req.body.description,
             category: req.body.category,
-            // add createdby User object on creation of new task
-            // createdBy: CURRENT_USER_HERE,
+            //add createdby User object on creation of new task
+            userId: req.body.userId,
         })
         newTask.save()
             .then(task => res.status(200).json(task))
