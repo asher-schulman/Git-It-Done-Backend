@@ -20,8 +20,7 @@ router.post('/', async (req, res) => {
         const newTask = new Task({
             title: req.body.title,
             description: req.body.description,
-            category: req.body.category,
-            //add createdby User object on creation of new task
+            status: req.body.status,
             userId: req.body.userId,
         })
         newTask.save()

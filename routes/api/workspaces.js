@@ -6,9 +6,25 @@ const Workspace = require('../../models/Workspace.model')
 
 // GET /api/workspaces/
 router.get('/', async (req, res) => {
+
     try {
+        console.log(await Workspace.find({}).populate("tasks"))
         res.status(200).json(
-            await Workspace.find({})
+            await Workspace.find({}).populate("tasks")
+        )
+    } catch (err) {
+        res.status(400).json(err)
+    }
+})
+router.post('/:id/add', async (req, res)=> {
+    try {
+        const modifiedWorkspace = (await Workspace.findById(req.params.id))
+        console.log(modifiedWorkspace)
+        modifiedWorkspace.tasks.push(req.body.taskId)
+        await modifiedWorkspace.save()
+        res.status(200).json(
+            {modifiedWorkspace}
+            
         )
     } catch (err) {
         res.status(400).json(err)
@@ -29,6 +45,10 @@ router.post('/', async (req, res) => {
         res.status(400).json(err)
     }
 })
+
+
+
+
 // GET /api/workspaces/:id
 router.get('/:id', async (req, res) => {
     try {
@@ -49,6 +69,7 @@ router.put('/:id', async (req, res) => {
         res.status(400).json(err)
     }
 })
+
 // DELETE /api/workspaces/:id
 router.delete('/:id', async (req, res) => {
     try {
