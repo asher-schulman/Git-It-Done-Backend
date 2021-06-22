@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const User = require('./User.model')
+const Workspace = require('./Workspace.model')
 
 const Schema = mongoose.Schema
 
@@ -20,10 +21,12 @@ const taskSchema = new Schema({
     userId: {
         type: String
     },
+    workspaceId: String,
+    //workspace: {type:mongoose.Schema.Types.ObjectId,ref:"Workspace"},
     createdAt: {
         type: Date,
         default: Date.now
     }
-})
+}, {timestamps:true})
 
 module.exports = mongoose.model('Task', taskSchema)

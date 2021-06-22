@@ -8,7 +8,7 @@ const Workspace = require('../../models/Workspace.model')
 router.get('/', async (req, res) => {
 
     try {
-        console.log(await Workspace.find({}).populate("tasks"))
+        //console.log(await Workspace.find({}).populate("tasks"))
         res.status(200).json(
             await Workspace.find({}).populate("tasks")
         )
@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
 router.post('/:id/add', async (req, res)=> {
     try {
         const modifiedWorkspace = (await Workspace.findById(req.params.id))
-        console.log(modifiedWorkspace)
+        //console.log(modifiedWorkspace)
         modifiedWorkspace.tasks.push(req.body.taskId)
         await modifiedWorkspace.save()
         res.status(200).json(
@@ -32,6 +32,10 @@ router.post('/:id/add', async (req, res)=> {
 })
 // POST /api/workspaces/
 router.post('/', async (req, res) => {
+    // Workspace.find({ title: req.body.tasks }, (err,founded)=>{
+    //     console.log(founded)
+    // })
+    // if(req.body.tasks)
     try {
         const newWorkspace = new Workspace({
             title: req.body.title,

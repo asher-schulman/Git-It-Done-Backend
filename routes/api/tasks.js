@@ -1,4 +1,5 @@
 const express = require('express')
+const Workspace = require('../../models/Workspace.model')
 const router = express.Router()
 
 // Task model
@@ -22,7 +23,11 @@ router.post('/', async (req, res) => {
             description: req.body.description,
             status: req.body.status,
             userId: req.body.userId,
+            workspaceId: req.body.workspaceId
         })
+        const found_workspace = await Workspace.findById(req.body.workspaceId).exec()
+        found_workspace.tasks.push(newTask);
+        await found_workspace.save()
         newTask.save()
             .then(task => res.status(200).json(task))
     } catch (err) {
