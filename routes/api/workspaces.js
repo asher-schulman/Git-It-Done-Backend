@@ -3,6 +3,8 @@ const router = express.Router()
 
 // Workspace model
 const Workspace = require('../../models/Workspace.model')
+//Task Model
+const Task = require('../../models/Task.model')
 
 // GET /api/workspaces/
 router.get('/', async (req, res) => {
@@ -41,7 +43,7 @@ router.post('/', async (req, res) => {
             title: req.body.title,
             statuses: ([req.body.statuses] || ['open']),
             userId: [req.body.userId],
-            tasks: [req.body.tasks]
+            // tasks: [req.body.tasks]
         })
         newWorkspace.save()
             .then(task => res.status(200).json(task))
@@ -69,6 +71,17 @@ router.put('/:id', async (req, res) => {
         res.status(200).json(
             await Workspace.findByIdAndUpdate(req.params.id, req.body, { new: true })
         )
+    } catch (err) {
+        res.status(400).json(err)
+    }
+})
+
+// GET /api/workspaces/:id/alltasks
+router.get('/:id/alltasks', async (req, res) => {
+    try {
+        const tasks = await Task.find({ workspaceId: req.params.id })
+
+        res.status(200).json(tasks)
     } catch (err) {
         res.status(400).json(err)
     }
