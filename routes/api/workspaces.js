@@ -2,13 +2,31 @@ const express = require('express')
 const router = express.Router()
 
 // Workspace model
-const Workspace = require('../../models/User.model')
+const Workspace = require('../../models/Workspace.model')
+//Task Model
+const Task = require('../../models/Task.model')
 
 // GET /api/workspaces/
 router.get('/', async (req, res) => {
+
     try {
+        //console.log(await Workspace.find({}).populate("tasks"))
         res.status(200).json(
-            await Workspace.find({})
+            await Workspace.find({}).populate("tasks")
+        )
+    } catch (err) {
+        res.status(400).json(err)
+    }
+})
+router.post('/:id/add', async (req, res)=> {
+    try {
+        const modifiedWorkspace = (await Workspace.findById(req.params.id))
+        //console.log(modifiedWorkspace)
+        modifiedWorkspace.tasks.push(req.body.taskId)
+        await modifiedWorkspace.save()
+        res.status(200).json(
+            {modifiedWorkspace}
+            
         )
     } catch (err) {
         res.status(400).json(err)
@@ -16,12 +34,16 @@ router.get('/', async (req, res) => {
 })
 // POST /api/workspaces/
 router.post('/', async (req, res) => {
+    // Workspace.find({ title: req.body.tasks }, (err,founded)=>{
+    //     console.log(founded)
+    // })
+    // if(req.body.tasks)
     try {
         const newWorkspace = new Workspace({
             title: req.body.title,
             statuses: ([req.body.statuses] || ['open']),
-            users: [req.params.users],
-            tasks: [req.params.tasks]
+            userId: [req.body.userId],
+            // tasks: [req.body.tasks]
         })
         newWorkspace.save()
             .then(task => res.status(200).json(task))
@@ -29,6 +51,10 @@ router.post('/', async (req, res) => {
         res.status(400).json(err)
     }
 })
+
+
+
+
 // GET /api/workspaces/:id
 router.get('/:id', async (req, res) => {
     try {
@@ -49,6 +75,18 @@ router.put('/:id', async (req, res) => {
         res.status(400).json(err)
     }
 })
+
+// GET /api/workspaces/:id/alltasks
+router.get('/:id/alltasks', async (req, res) => {
+    try {
+        const tasks = await Task.find({ workspaceId: req.params.id })
+
+        res.status(200).json(tasks)
+    } catch (err) {
+        res.status(400).json(err)
+    }
+})
+
 // DELETE /api/workspaces/:id
 router.delete('/:id', async (req, res) => {
     try {

@@ -12,9 +12,15 @@ const workspaceSchema = new Schema({
         required: true,
         default: ['open', 'closed']
     },
-    users: [User],
-    // arr of tasks inside this workspace
-    tasks: [Task],
+    // userId: [{type:mongoose.Schema.Types.ObjectId,ref:"User"}],
+    //arr of tasks inside this workspace
+    userId: [String],
+    tasks: [{
+        type: Schema.Types.ObjectId,
+        default: void 0,
+        ref:"Task"
+    }]
+    
 })
 
 module.exports = mongoose.model('Workspace', workspaceSchema)
