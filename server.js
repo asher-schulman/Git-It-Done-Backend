@@ -33,7 +33,7 @@ app.use(express.json())
 /////////////////////////
 // url endpoints for us to communicate with our API
 app.use('/api/tasks', taskRouter)
-app.use('/api/users', userRouter)
+// app.use('/api/users', userRouter)
 app.use('/api/workspaces', workspaceRouter)
 
 /////////////////////////
