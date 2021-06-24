@@ -8,7 +8,6 @@ const cors = require ('cors')
 const port = process.env.PORT || 8000;
 const database = require('./database')
 
-const Task = require('./models/Task.model')
 const taskRouter = require('./routes/api/tasks')
 const userRouter = require('./routes/api/users')
 const workspaceRouter = require('./routes/api/workspaces.js')
@@ -34,7 +33,7 @@ app.use(express.json())
 /////////////////////////
 // url endpoints for us to communicate with our API
 app.use('/api/tasks', taskRouter)
-// app.use('/api/users', userRouter)
+app.use('/api/users', userRouter)
 app.use('/api/workspaces', workspaceRouter)
 
 /////////////////////////
