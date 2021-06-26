@@ -2,7 +2,7 @@
 
 ### *created for General Assembly's SEI Course*
 
-full-stack workflow & project management web application, built by [Asher Schulman](https://github.com/asher8346), [Peiyi Shi](https://github.com/pys12 ), and [Handsome Vang](https://github.com/handwidhtv8) as a group project for General Assembly's Full-Stack Software Engineering Bootcamp.
+full-stack workflow & project management web application, built by [Asher Schulman](https://github.com/asher-schulman), [Peiyi Shi](https://github.com/pys12 ), and [Handsome Vang](https://github.com/handwidhtv8) as a group project for General Assembly's Full-Stack Software Engineering Bootcamp.
 ***
 **Problem:** unable to keep track of to-do work when it involves multiple people. tracking work and smaller parts of a larger process become almost impossible, with back to back to back emails and calls to revise and get information on what is done/need to be done. a need for asyncronouse workflows and communication beyond emails
 

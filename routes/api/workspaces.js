@@ -34,14 +34,10 @@ router.post('/:id/add', async (req, res)=> {
 })
 // POST /api/workspaces/
 router.post('/', async (req, res) => {
-    // Workspace.find({ title: req.body.tasks }, (err,founded)=>{
-    //     console.log(founded)
-    // })
-    // if(req.body.tasks)
     try {
         const newWorkspace = new Workspace({
             title: req.body.title,
-            statuses: ([req.body.statuses] || ['open']),
+            // statuses: ([req.body.statuses] || ['open']),
             userId: [req.body.userId],
             // tasks: [req.body.tasks]
         })

@@ -17,7 +17,8 @@ const taskSchema = new Schema({
         required: true,
         default: 'open'
     },
-    flags: [String],
+    // flags not functional yet
+    // flags: [String],
     userId: {
         type: String
     },
