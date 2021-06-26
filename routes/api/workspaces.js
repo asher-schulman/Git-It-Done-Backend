@@ -3,12 +3,30 @@ const router = express.Router()
 
 // Workspace model
 const Workspace = require('../../models/Workspace.model')
+//Task Model
+const Task = require('../../models/Task.model')
 
 // GET /api/workspaces/
 router.get('/', async (req, res) => {
+
     try {
+        //console.log(await Workspace.find({}).populate("tasks"))
         res.status(200).json(
-            await Workspace.find({})
+            await Workspace.find({}).populate("tasks")
+        )
+    } catch (err) {
+        res.status(400).json(err)
+    }
+})
+router.post('/:id/add', async (req, res)=> {
+    try {
+        const modifiedWorkspace = (await Workspace.findById(req.params.id))
+        //console.log(modifiedWorkspace)
+        modifiedWorkspace.tasks.push(req.body.taskId)
+        await modifiedWorkspace.save()
+        res.status(200).json(
+            {modifiedWorkspace}
+            
         )
     } catch (err) {
         res.status(400).json(err)
@@ -28,10 +46,9 @@ router.post('/', async (req, res) => {
     try {
         const newWorkspace = new Workspace({
             title: req.body.title,
-            // statuses: statusCheck,
-            statuses: req.body.statuses,
-            users: [req.body.users],
-            tasks: [req.body.tasks]
+            // statuses: ([req.body.statuses] || ['open']),
+            userId: [req.body.userId],
+            // tasks: [req.body.tasks]
         })
         newWorkspace.save()
             .then(task => res.status(200).json(task))
@@ -39,6 +56,10 @@ router.post('/', async (req, res) => {
         res.status(400).json(err)
     }
 })
+
+
+
+
 // GET /api/workspaces/:id
 router.get('/:id', async (req, res) => {
     try {
@@ -59,6 +80,18 @@ router.put('/:id', async (req, res) => {
         res.status(400).json(err)
     }
 })
+
+// GET /api/workspaces/:id/alltasks
+router.get('/:id/alltasks', async (req, res) => {
+    try {
+        const tasks = await Task.find({ workspaceId: req.params.id })
+
+        res.status(200).json(tasks)
+    } catch (err) {
+        res.status(400).json(err)
+    }
+})
+
 // DELETE /api/workspaces/:id
 router.delete('/:id', async (req, res) => {
     try {

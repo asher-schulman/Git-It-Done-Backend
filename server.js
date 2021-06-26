@@ -8,7 +8,6 @@ const cors = require ('cors')
 const port = process.env.PORT || 8000;
 const database = require('./database')
 
-const Task = require('./models/Task.model')
 const taskRouter = require('./routes/api/tasks')
 const userRouter = require('./routes/api/users')
 const workspaceRouter = require('./routes/api/workspaces.js')
@@ -34,7 +33,7 @@ app.use(express.json())
 /////////////////////////
 // url endpoints for us to communicate with our API
 app.use('/api/tasks', taskRouter)
-app.use('/api/users', userRouter)
+// app.use('/api/users', userRouter)
 app.use('/api/workspaces', workspaceRouter)
 
 /////////////////////////
@@ -47,6 +46,21 @@ app.get("/", async (req, res) => {
         res.status(200).json( await {
             response: "Hello World",
             key: 'value pair!'
+        })
+    } catch (err) {
+        res.status(400).json(err)
+    }
+})
+
+app.get("/api", async (req, res) => {
+    try {
+        res.status(200).json( await {
+            response: "Welcome to Git It Done's API",
+            instructions: "Use the routes below to get specific data. This API will have 3 routers, and includes full CRUD operations as well as robust database queries. All api URLs take in :id params at the end as well as additional parameters. See the raw code in /routes/api for more URLs and parameters",
+            users: "NOT CURRENTLY FUNCTIONAL. /api/users - returns an array of all users",
+            workspaces: "/api/workspaces - returns as array of all workspaces",
+            tasks: "/api/tasks - returns as array of all tasks",
+            tasksInSpecificWorkspace: "/api/workspaces/:id/alltasks"
         })
     } catch (err) {
         res.status(400).json(err)
