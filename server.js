@@ -43,10 +43,7 @@ app.use('/api/workspaces', workspaceRouter)
 // test route that sends some json data to make sure server is working
 app.get("/", async (req, res) => {
     try {
-        res.status(200).json( await {
-            response: "Hello World",
-            key: 'value pair!'
-        })
+        res.redirect('/api')
     } catch (err) {
         res.status(400).json(err)
     }
