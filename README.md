@@ -10,8 +10,8 @@ full-stack workflow & project management web application, built by [Asher Schulm
 
 **Stack Used:** MERN (MongoDB, Express, React.js, & Node.js)
 
-[Frontend Application](https://git-it-done-gid.netlify.app/)
-[Backend & API](https://git-it-done-backend.herokuapp.com/)
+[Frontend Application](https://git-it-done-gid.netlify.app/) |
+[Backend & API](https://git-it-done-backend.herokuapp.com/) |
 [Figma Wireframes](https://www.figma.com/file/miNyJ54BnuxIeKtkcWINQd/Git-It-Done?node-id=0%3A1)
 * * *
 ## Requirements
