@@ -18,13 +18,20 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         const newUser = new User({
-            googleId: req.body.profileObj.googleId,
+            googleId: req.body.googleId,
             // maybe set mongoDB _id to the googleId?
             // _id: req.body.progileObj.googleId,
-            tokenId: req.body.tokenObj.id_token,
-            displayName: req.body.profileObj.name,
-            image: req.body.profileObj.imageUrl,
+            tokenId: req.body.tokenId,
+            displayName: req.body.displayName,
         })
+        // const newUser = new User({
+        //     googleId: req.body.profileObj.googleId,
+        //     // maybe set mongoDB _id to the googleId?
+        //     // _id: req.body.progileObj.googleId,
+        //     tokenId: req.body.tokenObj.id_token,
+        //     displayName: req.body.profileObj.name,
+        //     image: req.body.profileObj.imageUrl,
+        // })
         newUser.save()
             .then(task => res.status(200).json(task))
     } catch (err) {
