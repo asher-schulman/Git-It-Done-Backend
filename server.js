@@ -37,6 +37,7 @@ app.use("/api/workspaces", workspaceRouter);
 // database like .findById() CRUD operations
 // test route that sends some json data to make sure server is working
 app.get("/", async (req, res) => {
+
 	try {
 		res.redirect("/api");
 	} catch (err) {
